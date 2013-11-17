@@ -37,6 +37,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.geppetto.core.common.GeppettoExecutionException;
 import org.geppetto.core.common.GeppettoInitializationException;
+import org.geppetto.core.data.model.AVariable;
 import org.geppetto.core.data.model.VariableList;
 import org.geppetto.core.model.IModel;
 import org.geppetto.core.model.state.StateTreeRoot;
@@ -52,9 +53,11 @@ public class SPHSimulatorService extends ASimulator {
 
 	private static Log logger = LogFactory.getLog(SPHSimulatorService.class);
 	
+	// TODO: this should come from configuration
+	private final String aspectID = "sph";
+	
 	@Autowired
 	private ISolver sphSolver;
-
 
 	@Override
 	public void simulate(IRunConfiguration runConfiguration) throws GeppettoExecutionException
@@ -74,13 +77,29 @@ public class SPHSimulatorService extends ASimulator {
 	
 	@Override
 	public VariableList getForceableVariables() {
+		VariableList vars = sphSolver.getForceableVariables();
+		
+		// set aspect ID
+		setAspectID(vars);
+		
 		// the simulator could do some filtering here to expose a sub-set of the available variables
-		return sphSolver.getForceableVariables();
+		return vars;
 	}
 
 	@Override
 	public VariableList getWatchableVariables() {
+		VariableList vars = sphSolver.getWatchableVariables();
+		
+		setAspectID(vars);
+		
 		// the simulator could do some filtering here to expose a sub-set of the available variables
-		return sphSolver.getWatchableVariables();
+		return vars;
+	}
+	
+	private void setAspectID(VariableList vars) {
+		for(AVariable var : vars.getVariables())
+		{
+			var.setAspect(aspectID);
+		}
 	}
 }
