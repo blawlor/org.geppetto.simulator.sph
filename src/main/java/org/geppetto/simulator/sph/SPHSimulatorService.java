@@ -33,6 +33,8 @@
 
 package org.geppetto.simulator.sph;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.geppetto.core.common.GeppettoExecutionException;
@@ -101,5 +103,29 @@ public class SPHSimulatorService extends ASimulator {
 		{
 			var.setAspect(aspectID);
 		}
+	}
+
+	@Override
+	public void addWatchVariables(List<String> variableNames) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void startWatch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stopWatch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearWatchVariables() {
+		// TODO Auto-generated method stub
+		
 	}
 }
